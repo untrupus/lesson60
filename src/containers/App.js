@@ -44,7 +44,7 @@ function App() {
         setMyMessage(newField);
     }
 
-    const test = () => {
+    const changePost = () => {
         setPost(myMessage)
     }
 
@@ -63,7 +63,7 @@ function App() {
         <div className="App">
             <PostForm
                 change={newMessage}
-                click={test}
+                click={changePost}
             />
             {messages}
         </div>
