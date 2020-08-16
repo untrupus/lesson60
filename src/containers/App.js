@@ -20,7 +20,7 @@ function App() {
         if (post.message !== '' && post.author !== '') {
             data.set('message', post.message);
             data.set('author', post.author);
-            const response = await fetch(url, {
+            await fetch(url, {
                 method: 'post',
                 body: data,
             });

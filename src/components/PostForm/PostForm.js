@@ -6,14 +6,14 @@ const PostForm = props => {
         <div className="PostForm">
             <input
                 type="text"
-                placeholder="Name"
+                placeholder="Author"
                 className="field"
                 name="author"
                 onChange={props.change}
             />
             <input
                 type="text"
-                placeholder="Author"
+                placeholder="Message"
                 className="field"
                 name="message"
                 onChange={props.change}
