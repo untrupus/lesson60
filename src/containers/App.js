@@ -22,11 +22,13 @@ function App() {
             let newResponse = await axios(`http://146.185.154.90:8000/messages?datetime=${lastDate}`);
             const newMessages = newResponse.data;
             if (newMessages.length !== 0) {
+                console.log(newMessages);
                 const newMessenger = [...messenger];
                 for (let i = 0; i < newMessages.length; i++) {
                     newMessenger.push(newMessages[i]);
                 }
                 setMessenger(newMessenger);
+                console.log(newMessenger);
                 lastDate = newMessages[newMessages.length - 1].datetime;
             }
         }, 2000);
@@ -36,9 +38,8 @@ function App() {
         getMessages().catch(console.error);
     }, []);
 
-    useEffect(() => {
-        getNewMessages().catch(console.error);
-    })
+    getNewMessages().catch(console.error);
+
 
     const newMessage = event => {
         const attr = event.target.name;
@@ -58,7 +59,7 @@ function App() {
                 body: data,
             });
         }
-        setMyMessage({author: '', message: ''})
+        setMyMessage({author: '', message: ''});
     }
 
     const messages = messenger.map((message) => {
