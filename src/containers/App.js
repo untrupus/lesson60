@@ -9,15 +9,36 @@ function App() {
     const [myMessage, setMyMessage] = useState({author: '', message: ''});
 
     const getMessages = async () => {
-        const result = await axios('http://146.185.154.90:8000/messages');
-        setMessenger(result.data);
+        const response = await axios('http://146.185.154.90:8000/messages');
+        let result = response.data;
+        setMessenger(result);
+    }
+
+    const getNewMessages = async () => {
+        const response = await axios('http://146.185.154.90:8000/messages');
+        let result = response.data;
+        let lastDate = result[result.length - 1].datetime;
+        setInterval(async () => {
+            let newResponse = await axios(`http://146.185.154.90:8000/messages?datetime=${lastDate}`);
+            const newMessages = newResponse.data;
+            if (newMessages.length !== 0) {
+                const newMessenger = [...messenger];
+                for (let i = 0; i < newMessages.length; i++) {
+                    newMessenger.push(newMessages[i]);
+                }
+                setMessenger(newMessenger);
+                lastDate = newMessages[newMessages.length - 1].datetime;
+            }
+        }, 2000);
     }
 
     useEffect(() => {
-        setInterval(() => {
-            getMessages().catch(console.error);
-        }, 2000);
+        getMessages().catch(console.error);
     }, []);
+
+    useEffect(() => {
+        getNewMessages().catch(console.error);
+    })
 
     const newMessage = event => {
         const attr = event.target.name;
