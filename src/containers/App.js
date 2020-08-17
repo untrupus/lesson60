@@ -46,6 +46,7 @@ function App() {
 
     const changePost = () => {
         setPost(myMessage)
+        setMyMessage({author: '', message: ''})
     }
 
     const messages = messenger.map((message) => {
@@ -64,6 +65,8 @@ function App() {
             <PostForm
                 change={newMessage}
                 click={changePost}
+                author={myMessage.author}
+                message={myMessage.message}
             />
             {messages}
         </div>

@@ -9,6 +9,7 @@ const PostForm = props => {
                 placeholder="Author"
                 className="field"
                 name="author"
+                value={props.author}
                 onChange={props.change}
             />
             <input
@@ -16,6 +17,7 @@ const PostForm = props => {
                 placeholder="Message"
                 className="field"
                 name="message"
+                value={props.message}
                 onChange={props.change}
             />
             <button type="button" className="post" onClick={props.click}>Post</button>
