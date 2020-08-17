@@ -22,13 +22,11 @@ function App() {
             let newResponse = await axios(`http://146.185.154.90:8000/messages?datetime=${lastDate}`);
             const newMessages = newResponse.data;
             if (newMessages.length !== 0) {
-                console.log(newMessages);
                 const newMessenger = [...messenger];
                 for (let i = 0; i < newMessages.length; i++) {
                     newMessenger.push(newMessages[i]);
                 }
                 setMessenger(newMessenger);
-                console.log(newMessenger);
                 lastDate = newMessages[newMessages.length - 1].datetime;
             }
         }, 2000);
