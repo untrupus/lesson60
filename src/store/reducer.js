@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_MESSAGES_SUCCESS:
             console.log(action.value);
-            return {...state, messenger: action.value}
+            return {...state, messenger: action.value, error: {}}
         case FETCH_MESSAGES_ERROR:
             return {...state, getError: action.error}
         case POST_MESSAGE_SUCCESS:

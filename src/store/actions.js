@@ -37,8 +37,7 @@ export const postMessage = (data) => {
             await axiosOrder.post('', data);
             dispatch(postMessageSuccess());
         } catch (e) {
-            console.log(e.response.data);
-            dispatch(postMessagesError(e));
+            dispatch(postMessagesError(e.response.data));
         }
     };
 };
@@ -56,7 +55,7 @@ export const startInterval = (messenger) => {
             }
             // console.log(newMessenger);
             // lastDate = messenger[messenger.length - 1].datetime;
-            dispatch(fetchMessagesSuccess(newMessenger));
+            // dispatch(fetchMessagesSuccess(newMessenger));
         }
 
     }
