@@ -1,43 +1,26 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {getMessages, postMessage, startInterval} from "../store/actions";
 import './App.css';
 import Message from "../components/Message/Message";
 import PostForm from "../components/PostForm/PostForm";
-import axios from 'axios';
 
 function App() {
-    const [messenger, setMessenger] = useState([]);
+    const messenger = useSelector(state => state.messenger);
+    const error = useSelector(state => state.error);
+    const dispatch = useDispatch();
     const [myMessage, setMyMessage] = useState({author: '', message: ''});
 
-    const getMessages = async () => {
-        const response = await axios('http://146.185.154.90:8000/messages');
-        let result = response.data;
-        setMessenger(result);
-    }
-
-    const getNewMessages = async () => {
-        const response = await axios('http://146.185.154.90:8000/messages');
-        let result = response.data;
-        let lastDate = result[result.length - 1].datetime;
-        setInterval(async () => {
-            let newResponse = await axios(`http://146.185.154.90:8000/messages?datetime=${lastDate}`);
-            const newMessages = newResponse.data;
-            if (newMessages.length !== 0) {
-                const newMessenger = [...messenger];
-                for (let i = 0; i < newMessages.length; i++) {
-                    newMessenger.push(newMessages[i]);
-                }
-                setMessenger(newMessenger);
-                lastDate = newMessages[newMessages.length - 1].datetime;
-            }
-        }, 2000);
-    }
+    useEffect(() => {
+        dispatch(getMessages());
+    }, [dispatch]);
 
     useEffect(() => {
-        getMessages().catch(console.error);
-    }, []);
-
-    getNewMessages().catch(console.error);
-
+        const interval = setInterval(() => {
+            dispatch(startInterval(messenger));
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [messenger, dispatch]);
 
     const newMessage = event => {
         const attr = event.target.name;
@@ -46,17 +29,8 @@ function App() {
         setMyMessage(newField);
     }
 
-    const changePost = async () => {
-        const url = 'http://146.185.154.90:8000/messages';
-        const data = new URLSearchParams();
-        if (myMessage.message !== '' && myMessage.author !== '') {
-            data.set('message', myMessage.message);
-            data.set('author', myMessage.author);
-            await fetch(url, {
-                method: 'post',
-                body: data,
-            });
-        }
+    const changePost = () => {
+        dispatch(postMessage(myMessage));
         setMyMessage({author: '', message: ''});
     }
 
@@ -78,6 +52,7 @@ function App() {
                 click={changePost}
                 author={myMessage.author}
                 message={myMessage.message}
+                error={error.error}
             />
             {messages}
         </div>

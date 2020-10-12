@@ -10,3 +10,10 @@ input {
 .post {
     padding: 10px;
 }
+
+.error {
+    height: 25px;
+    padding-left: 15px;
+    font-weight: bold;
+    color: red;
+}

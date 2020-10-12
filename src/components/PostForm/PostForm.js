@@ -21,6 +21,7 @@ const PostForm = props => {
                 onChange={props.change}
             />
             <button type="button" className="post" onClick={props.click}>Post</button>
+            <p className="error">{props.error}</p>
         </div>
     );
 };
