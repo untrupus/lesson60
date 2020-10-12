@@ -47,15 +47,12 @@ export const startInterval = (messenger) => {
         let lastDate = messenger[messenger.length - 1].datetime;
         let newResponse = await axiosOrder(`?datetime=${lastDate}`);
         const newMessages = newResponse.data;
-
         if (newMessages.length > 0) {
             let newMessenger = [...messenger];
             for (let i = 0; i < newMessages.length; i++) {
                 newMessenger.push(newMessages[i]);
             }
-            // console.log(newMessenger);
-            // lastDate = messenger[messenger.length - 1].datetime;
-            // dispatch(fetchMessagesSuccess(newMessenger));
+            dispatch(fetchMessagesSuccess(newMessenger));
         }
 
     }

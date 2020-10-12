@@ -17,8 +17,9 @@ function App() {
 
     useEffect(() => {
         const interval = setInterval(() => {
+            console.log('asd')
             dispatch(startInterval(messenger));
-        }, 4000);
+        }, 2000);
         return () => clearInterval(interval);
     }, [messenger, dispatch]);
 
